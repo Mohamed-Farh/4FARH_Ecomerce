@@ -11,20 +11,17 @@ class Carts extends Component
     public $cartCount;
     public $wishlistCount;
 
-    //القيم دي هيجيبها من FeatureProduct
-    //مستخدم حاجه هناك اسمها emit دي كأن بقوله لو العمليه نجحت اعمل كذا
-    // و اجي هنا اسمها استخدمع في listeners
     protected $listeners = [
-        'updateCart'        => 'update_cart',
-        'removeFromCart'    => 'remove_from_cart',
-        'removeFromWishList'=> 'remove_from_wish_list',
-        'moveToCart'        => 'move_to_cart',
+        'updateCart' => 'update_cart',
+        'removeFromCart' => 'remove_from_cart',
+        'removeFromWishList' => 'remove_from_wish_list',
+        'moveToCart' => 'move_to_cart',
     ];
 
     public function mount()
     {
-        $this->cartCount        = Cart::instance('default')->count();
-        $this->wishlistCount    = Cart::instance('wishlist')->count();
+        $this->cartCount = Cart::instance('default')->count();
+        $this->wishlistCount = Cart::instance('wishlist')->count();
     }
 
     public function update_cart()
@@ -37,7 +34,7 @@ class Carts extends Component
     {
         Cart::instance('default')->remove($rowId);
         $this->emit('updateCart');
-        $this->alert('success', 'Item Removed From Your Cart!');
+        $this->alert('success', 'Item removed from your cart!');
         if (Cart::instance('default')->count() == 0){
             return redirect()->route('frontend.cart');
         }
@@ -47,7 +44,7 @@ class Carts extends Component
     {
         Cart::instance('wishlist')->remove($rowId);
         $this->emit('updateCart');
-        $this->alert('success', 'Item Removed From Your Wish List!');
+        $this->alert('success', 'Item removed from your wish list!');
         if (Cart::instance('wishlist')->count() == 0){
             return redirect()->route('frontend.wishlist');
         }
@@ -62,11 +59,11 @@ class Carts extends Component
 
         if ($duplicate->isNotEmpty()) {
             Cart::instance('wishlist')->remove($rowId);
-            $this->alert('error', 'Product Already Exist.');
+            $this->alert('error', 'Product already exist.');
         } else {
             Cart::instance('default')->add($item->id, $item->name, 1, $item->price)->associate(Product::class);
             Cart::instance('wishlist')->remove($rowId);
-            $this->alert('success', 'Product Added In Your Cart Successfully.');
+            $this->alert('success', 'Product added in your cart successfully.');
         }
 
         $this->emit('updateCart');

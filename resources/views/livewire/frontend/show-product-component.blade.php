@@ -12,12 +12,12 @@
             </div>
         </div>
         <div class="col-sm-3 pl-sm-0">
-            <a wire:click="addToCart()" class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0" style="color: white">
+            <a wire:click="addToCart()" class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0">
                 Add to cart
             </a>
         </div>
     </div>
-    <a wire:click="addToWishList()" class="btn btn-link text-dark p-0 mb-4" style="color: white">
+    <a wire:click="addToWishList()" class="btn btn-link text-dark p-0 mb-4">
         <i class="far fa-heart mr-2"></i>Add to wish list
     </a>
 </div>

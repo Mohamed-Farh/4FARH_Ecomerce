@@ -44,7 +44,7 @@
 
         <!-- TRENDING PRODUCTS-->
 
-        <livewire:frontend.feartured-product />
+        <livewire:frontend.featured-product />
 
 
         <!-- SERVICES-->

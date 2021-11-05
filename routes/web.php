@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\BackendController;
+use \Backend\PaymentMethodController;
 use \Backend\ShippingCompanyController;
 use App\Http\Controllers\CustomerSearchController;
 use \Backend\CustomerAddressController;
@@ -16,6 +17,7 @@ use \Backend\CategoryController;
 use \Backend\ProductController;
 use \Backend\TagController;
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\PaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -41,14 +43,19 @@ Auth::routes(['verify'=>true]);
 Route::get('/',                 [FrontendController::class, 'index'   ])->name('frontend.index');
 Route::get('/cart',             [FrontendController::class, 'cart'    ])->name('frontend.cart');
 Route::get('/wishlist',         [FrontendController::class, 'wishlist'])->name('frontend.wishlist');
-Route::get('/checkout',         [FrontendController::class, 'checkout'])->name('frontend.checkout');
 Route::get('/shop/{slug?}',     [FrontendController::class, 'shop'    ])->name('frontend.shop');
 Route::get('/shop/tag/{slug?}', [FrontendController::class, 'shop_tag'])->name('frontend.shop_tag');
 Route::get('/product/{slug}',   [FrontendController::class, 'product' ])->name('frontend.product');
 
 
+Route::group(['middleware' => ['roles', 'role:customer'] ], function(){
 
-
+    Route::get('/checkout',          [FrontendController::class, 'checkout'])->name('frontend.checkout');
+    Route::post('/checkout/payment', [PaymentController::class, 'checkout_now'])->name('checkout.payment');
+    // Route::get('/checkout/{order_id}/cancelled', [Frontend\PaymentController::class, 'cancelled'])->name('checkout.cancel');
+    // Route::get('/checkout/{order_id}/completed', [Frontend\PaymentController::class, 'completed'])->name('checkout.complete');
+    // Route::get('/checkout/webhook/{order?}/{env?}', [Frontend\PaymentController::class, 'webhook'])->name('checkout.webhook.ipn');
+});
 //==========================================================================================================
 //================================= Admin Dashboard  =======================================================
 //==========================================================================================================
@@ -95,6 +102,9 @@ Route::group(['prefix' => 'admin', 'as'=>'admin.' ], function(){
         Route::resource('states'                ,StateController::class);
         Route::resource('cities'                ,CityController::class);
         Route::resource('shipping_companies'    ,ShippingCompanyController::class);
+        Route::resource('payment_methods'       ,PaymentMethodController::class);
+
+
     });
 
 });

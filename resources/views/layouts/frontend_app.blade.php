@@ -6,8 +6,8 @@
     @include('layouts.frontend.head')
 
     @yield('style')
-    @livewireStyles
 
+    @livewireStyles
 </head>
 
 <body>
@@ -27,11 +27,12 @@
     </div>
 
 
+
     <livewire:frontend.product-modal-shared />
 
-    @livewireScripts
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10">
-    </script>
+    <!-- Scripts -->
+    <livewire:scripts />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <x-livewire-alert::scripts />
 
     @yield('script')

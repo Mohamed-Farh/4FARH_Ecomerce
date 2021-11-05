@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Frontend;
 
 use App\Models\Product;
-use App\Models\Category;
+use App\Models\ProductCategory;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -12,8 +12,8 @@ class ShopProductsComponent extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $paginationLimit = 12;  //علشان يعرض 12 منتج في كل صفحة
-    public $slug;   //علشان استخدمها في اللينك
+    public $paginationLimit = 12;
+    public $slug;
     public $sortingBy = 'default';
 
     public function addToCart($id)
@@ -23,11 +23,11 @@ class ShopProductsComponent extends Component
             return $cartItem->id === $product->id;
         });
         if ($duplicates->isNotEmpty()) {
-            $this->alert('error', 'Product Already Exist!');
+            $this->alert('error', 'Product already exist!');
         } else {
             Cart::instance('default')->add($product->id, $product->name, 1, $product->price)->associate(Product::class);
             $this->emit('updateCart');
-            $this->alert('success', 'Product Added In Your Cart Successfully.');
+            $this->alert('success', 'Product added in your cart successfully.');
         }
     }
 
@@ -38,17 +38,16 @@ class ShopProductsComponent extends Component
             return $cartItem->id === $product->id;
         });
         if ($duplicates->isNotEmpty()) {
-            $this->alert('error', 'Product Already Exist!');
+            $this->alert('error', 'Product already exist!');
         } else {
             Cart::instance('wishlist')->add($product->id, $product->name, 1, $product->price)->associate(Product::class);
             $this->emit('updateCart');
-            $this->alert('success', 'Product Added In Your Wishlist Cart Successfully.');
+            $this->alert('success', 'Product added in your wishlist cart successfully.');
         }
     }
 
     public function render()
     {
-        // دي علشان عملية الترتيب او الفلترة في صفحة عرض المنتجات
         switch ($this->sortingBy) {
             case 'popularity':
                 $sort_field = 'id';
@@ -68,15 +67,13 @@ class ShopProductsComponent extends Component
         }
 
         $products = Product::with('firstMedia');
-
         if ($this->slug == '') {
             $products = $products->ActiveCategory();
         } else {
-            $category = Category::whereSlug($this->slug)->whereStatus(true)->first();
+            $product_category = ProductCategory::whereSlug($this->slug)->whereStatus(true)->first();
 
-            if (is_null($category->parent_id)) {
-                //هات كل الكاتيجرس اللي تحتها
-                $categoriesIds = Category::whereParentId($category->id)
+            if (is_null($product_category->parent_id)) {
+                $categoriesIds = ProductCategory::whereParentId($product_category->id)
                     ->whereStatus(true)->pluck('id')->toArray();
 
                 $products = $products->whereHas('category', function ($query) use ($categoriesIds) {
@@ -87,8 +84,8 @@ class ShopProductsComponent extends Component
 
                 $products = $products->with('category')->whereHas('category', function ($query) {
                     $query->where([
-                        'slug'      => $this->slug,
-                        'status'    => true
+                        'slug' => $this->slug,
+                        'status' => true
                     ]);
                 });
 
@@ -104,5 +101,4 @@ class ShopProductsComponent extends Component
             'products' => $products
         ]);
     }
-
 }

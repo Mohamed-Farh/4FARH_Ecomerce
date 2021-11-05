@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Frontend;
 
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 
 class CartTotalComponent extends Component
@@ -26,9 +27,17 @@ class CartTotalComponent extends Component
     //     $this->cart_total = getNumbers()->get('total');
     // }
 
+    public function mount()
+    {
+        $this->cart_subtotal    = Cart::instance('default')->subtotal();
+        // $this->cart_discount    = Cart::instance('default')->discount();
+        $this->cart_tax         = Cart::instance('default')->tax();
+        // $this->cart_shipping    = Cart::instance('default')->shipping();
+        $this->cart_total       = Cart::instance('default')->total();
+    }
+
     public function render()
     {
         return view('livewire.frontend.cart-total-component');
     }
-
 }

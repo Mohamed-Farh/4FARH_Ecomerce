@@ -12,8 +12,8 @@ class ShopProductsTagComponent extends Component
 {
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $paginationLimit = 12;  //علشان يعرض 12 منتج في كل صفحة
-    public $slug;   //علشان استخدمها في اللينك
+    public $paginationLimit = 12;
+    public $slug;
     public $sortingBy = 'default';
 
     public function addToCart($id)
@@ -23,11 +23,11 @@ class ShopProductsTagComponent extends Component
             return $cartItem->id === $product->id;
         });
         if ($duplicates->isNotEmpty()) {
-            $this->alert('error', 'Product Already Exist!');
+            $this->alert('error', 'Product already exist!');
         } else {
             Cart::instance('default')->add($product->id, $product->name, 1, $product->price)->associate(Product::class);
             $this->emit('updateCart');
-            $this->alert('success', 'Product Added In Your Cart Successfully.');
+            $this->alert('success', 'Product added in your cart successfully.');
         }
     }
 
@@ -38,11 +38,11 @@ class ShopProductsTagComponent extends Component
             return $cartItem->id === $product->id;
         });
         if ($duplicates->isNotEmpty()) {
-            $this->alert('error', 'Product Already Exist!');
+            $this->alert('error', 'Product already exist!');
         } else {
             Cart::instance('wishlist')->add($product->id, $product->name, 1, $product->price)->associate(Product::class);
             $this->emit('updateCart');
-            $this->alert('success', 'Product Added In Your Wishlist Cart Successfully.');
+            $this->alert('success', 'Product added in your wishlist cart successfully.');
         }
     }
 

@@ -16,7 +16,7 @@
                                     </a>
                                 </li>
                                 <li class="list-inline-item m-0 p-0">
-                                    <a wire:click.prevent="addToCart('{{ $relatedProduct->id }}')" class="btn btn-sm btn-dark" style="color: white">
+                                    <a wire:click.prevent="addToCart('{{ $relatedProduct->id }}')" class="btn btn-sm btn-dark">
                                         Add to cart
                                     </a>
                                 </li>

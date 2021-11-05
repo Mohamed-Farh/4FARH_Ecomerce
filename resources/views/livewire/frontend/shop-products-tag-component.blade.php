@@ -13,11 +13,11 @@
                         </div>
                         <ul class="list-unstyled small text-muted pl-lg-4 font-weight-normal">
                             @forelse($shop_category->appearedChildren as $sub_shop_category)
-                            <li class="mb-2">
-                                <a class="reset-anchor" href="{{ route('frontend.shop', $sub_shop_category->slug) }}">
-                                    {{ $sub_shop_category->name }}
-                                </a>
-                            </li>
+                                <li class="mb-2">
+                                    <a class="reset-anchor" href="{{ route('frontend.shop', $sub_shop_category->slug) }}">
+                                        {{ $sub_shop_category->name }}
+                                    </a>
+                                </li>
                             @empty
                             @endforelse
                         </ul>
@@ -65,41 +65,39 @@
                             </ul>
                         </div>
                     </div>
-
-                    {{-- Show Product --}}
                     <div class="row">
                         @forelse($products as $product)
-                        <div class="col-4" id="products-container-area">
-                            <div class="product text-center">
-                                <div class="mb-3 position-relative">
-                                    <div class="badge text-white badge-"></div>
-                                    <a class="d-block" href="{{ route('frontend.product', $product->slug) }}">
-                                        <img class="img-fluid w-100" src="{{ asset('assets/products/' . $product->firstMedia->file_name) }}" alt="{{ $product->name }}">
-                                    </a>
-                                    <div class="product-overlay">
-                                        <ul class="mb-0 list-inline">
-                                            <li class="list-inline-item m-0 p-0">
-                                                <a wire:click.prevent="addToWishList('{{ $product->id }}')" class="btn btn-sm btn-outline-dark" style="color:rgb(8, 8, 8)">
-                                                    <i class="far fa-heart"></i>
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item m-0 p-0">
-                                                <a wire:click.prevent="addToCart('{{ $product->id }}')" class="btn btn-sm btn-dark" style="color:white">
-                                                    Add To Cart
-                                                </a>
-                                            </li>
-                                            <li class="list-inline-item mr-0">
-                                                <a wire:click.prevent="$emit('showProductModalAction', '{{ $product->slug }}')" class="btn btn-sm btn-outline-dark" data-target="#productView" data-toggle="modal">
-                                                    <i class="fas fa-expand"></i>
-                                                </a>
-                                            </li>
-                                        </ul>
+                            <div class="col-4" id="products-container-area">
+                                <div class="product text-center">
+                                    <div class="mb-3 position-relative">
+                                        <div class="badge text-white badge-"></div>
+                                        <a class="d-block" href="{{ route('frontend.product', $product->slug) }}">
+                                            <img class="img-fluid w-100" src="{{ asset('assets/products/' . $product->firstMedia->file_name) }}" alt="{{ $product->name }}">
+                                        </a>
+                                        <div class="product-overlay">
+                                            <ul class="mb-0 list-inline">
+                                                <li class="list-inline-item m-0 p-0">
+                                                    <a wire:click.prevent="addToWishList('{{ $product->id }}')" class="btn btn-sm btn-outline-dark">
+                                                        <i class="far fa-heart"></i>
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item m-0 p-0">
+                                                    <a wire:click.prevent="addToCart('{{ $product->id }}')" class="btn btn-sm btn-dark">
+                                                        Add to cart
+                                                    </a>
+                                                </li>
+                                                <li class="list-inline-item mr-0">
+                                                    <a wire:click.prevent="$emit('showProductModalAction', '{{ $product->slug }}')" class="btn btn-sm btn-outline-dark" data-target="#productView" data-toggle="modal">
+                                                        <i class="fas fa-expand"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
+                                    <h6><a class="reset-anchor" href="{{ route('frontend.product', $product->slug) }}">{{ $product->name }}</a></h6>
+                                    <p class="small text-muted">${{ $product->price }}</p>
                                 </div>
-                                <h6><a class="reset-anchor" href="{{ route('frontend.product', $product->slug) }}">{{ $product->name }}</a></h6>
-                                <p class="small text-muted">${{ $product->price }}</p>
                             </div>
-                        </div>
                         @empty
                         @endforelse
                     </div>
@@ -110,8 +108,6 @@
         </div>
     </section>
 </div>
-
-
 @section('script')
     <script>
         let product_blocks = document.querySelectorAll('#products-container-area');
