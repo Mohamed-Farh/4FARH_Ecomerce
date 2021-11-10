@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderTransaction;
 use App\Models\Product;
-use App\Models\ProductCoupon;
+use App\Models\ProductCopon;
 use App\Models\User;
 use App\Notifications\Frontend\Customer\OrderCreatedNotification;
 use App\Notifications\Frontend\Customer\OrderThanksNotification;
@@ -26,12 +26,13 @@ class PaymentController extends Controller
 
     public function checkout_now(Request $request)
     {
-        $order = (new OrderService)->createOrder($request->except(['_token', 'submit']));
 
+        $order = (new OrderService)->createOrder($request->except(['_token', 'submit']));
         $omniPay = new OmnipayService('PayPal_Express');
         $response = $omniPay->purchase([
             'amount' => $order->total,
-            'transactionId' => $order->ref_id,
+            // 'transactionId' => $order->ref_id,
+            'transactionId' => $order->id,
             'currency' => $order->currency,
             'cancelUrl' => $omniPay->getCancelUrl($order->id),
             'returnUrl' => $omniPay->getReturnUrl($order->id),
@@ -58,7 +59,7 @@ class PaymentController extends Controller
             ]);
         });
 
-        toast('You have cancelled your order payment!', 'error');
+        toast('You Have Cancelled Your Order Payment!', 'error');
         return redirect()->route('frontend.index');
 
     }
@@ -85,36 +86,36 @@ class PaymentController extends Controller
                 'payment_result' => 'success'
             ]);
 
-            if (session()->has('coupon')) {
-                $coupon = ProductCoupon::whereCode(session()->get('coupon')['code'])->first();
-                $coupon->increment('used_times');
+            if (session()->has('copon')) {
+                $copon = ProductCopon::whereCode(session()->get('copon')['code'])->first();
+                $copon->increment('used_times');
             }
 
             Cart::instance('default')->destroy();
 
             session()->forget([
-                'coupon',
+                'copon',
                 'saved_customer_address_id',
                 'saved_shipping_company_id',
                 'saved_payment_method_id',
                 'shipping',
             ]);
 
-            User::whereHas('roles', function($query) {
-                $query->whereIn('name', ['admin', 'supervisor']);
-            })->each(function ($admin, $key) use ($order) {
-                $admin->notify(new OrderCreatedNotification($order));
-            });
+            // User::whereHas('roles', function($query) {
+            //     $query->whereIn('name', ['admin', 'supervisor']);
+            // })->each(function ($admin, $key) use ($order) {
+            //     $admin->notify(new OrderCreatedNotification($order));
+            // });
 
 
-            $data = $order->toArray();
-            $data['currency_symbol'] = $order->currency == 'USD' ? '$' : $order->currency;
-            $pdf = PDF::loadView('layouts.invoice', $data);
-            $saved_file = storage_path('app/pdf/files/' . $data['ref_id'] . '.pdf');
-            $pdf->save($saved_file);
+            // $data = $order->toArray();
+            // $data['currency_symbol'] = $order->currency == 'USD' ? '$' : $order->currency;
+            // $pdf = PDF::loadView('layouts.invoice', $data);
+            // $saved_file = storage_path('app/pdf/files/' . $data['ref_id'] . '.pdf');
+            // $pdf->save($saved_file);
 
-            $customer = User::find($order->user_id);
-            $customer->notify(new OrderThanksNotification($order, $saved_file));
+            // $customer = User::find($order->user_id);
+            // $customer->notify(new OrderThanksNotification($order, $saved_file));
 
 
             toast('Your recent payment is successful with reference code: ' . $response->getTransactionReference(), 'success');

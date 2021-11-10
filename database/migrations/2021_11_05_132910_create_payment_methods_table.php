@@ -19,10 +19,15 @@ class CreatePaymentMethodsTable extends Migration
             $table->string('code')->unique();
             $table->string('driver_name')->unique();
             $table->string('merchant_email')->nullable();
+            $table->string('client_id')->nullable();
+            $table->string('client_secret')->nullable();
             $table->string('username')->nullable();
             $table->string('password')->nullable();
             $table->string('secret')->nullable();
+
             $table->string('sandbox_merchant_email')->nullable();
+            $table->string('sandbox_client_id')->nullable();
+            $table->string('sandbox_client_secret')->nullable();
             $table->string('sandbox_username')->nullable();
             $table->string('sandbox_password')->nullable();
             $table->string('sandbox_secret')->nullable();

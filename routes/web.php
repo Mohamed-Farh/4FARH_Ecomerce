@@ -17,7 +17,8 @@ use \Backend\CategoryController;
 use \Backend\ProductController;
 use \Backend\TagController;
 use App\Http\Controllers\Frontend\FrontendController;
-use App\Http\Controllers\Frontend\PaymentController;
+use App\Http\Controllers\Frontend\PaymentController as FrontendPaymentController;
+use \Frontend\PaymentController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -50,11 +51,11 @@ Route::get('/product/{slug}',   [FrontendController::class, 'product' ])->name('
 
 Route::group(['middleware' => ['roles', 'role:customer'] ], function(){
 
-    Route::get('/checkout',          [FrontendController::class, 'checkout'])->name('frontend.checkout');
-    Route::post('/checkout/payment', [PaymentController::class, 'checkout_now'])->name('checkout.payment');
-    // Route::get('/checkout/{order_id}/cancelled', [Frontend\PaymentController::class, 'cancelled'])->name('checkout.cancel');
-    // Route::get('/checkout/{order_id}/completed', [Frontend\PaymentController::class, 'completed'])->name('checkout.complete');
-    // Route::get('/checkout/webhook/{order?}/{env?}', [Frontend\PaymentController::class, 'webhook'])->name('checkout.webhook.ipn');
+    Route::get('/checkout',          [FrontendPaymentController::class, 'checkout'])->name('frontend.checkout');
+    Route::post('/checkout/payment', [FrontendPaymentController::class, 'checkout_now'])->name('checkout.payment');
+    Route::get('/checkout/{order_id}/cancelled', [FrontendPaymentController::class, 'cancelled'])->name('checkout.cancel');
+    Route::get('/checkout/{order_id}/completed', [FrontendPaymentController::class, 'completed'])->name('checkout.complete');
+    Route::get('/checkout/webhook/{order?}/{env?}', [FrontendPaymentController::class, 'webhook'])->name('checkout.webhook.ipn');
 });
 //==========================================================================================================
 //================================= Admin Dashboard  =======================================================

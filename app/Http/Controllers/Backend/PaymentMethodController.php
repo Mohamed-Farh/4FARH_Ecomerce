@@ -44,7 +44,7 @@ class PaymentMethodController extends Controller
         PaymentMethod::create($request->validated());
 
         return redirect()->route('admin.payment_methods.index')->with([
-            'message'    => 'Created successfully',
+            'message'    => 'Payment Method Created Successfully',
             'alert-type' => 'success'
         ]);
 
@@ -69,14 +69,15 @@ class PaymentMethodController extends Controller
 
     public function update(PaymentMethodRequest $request, PaymentMethod $payment_method)
     {
+
         if (!auth()->user()->ability('superAdmin', 'update_payment_methods')){
             return redirect('admin/index');
         }
 
         $payment_method->update($request->validated());
-
+        dd($payment_method);
         return redirect()->route('admin.payment_methods.index')->with([
-            'message'    => 'Updated successfully',
+            'message'    => 'Payment Method Updated Successfully',
             'alert-type' => 'success'
         ]);
     }
@@ -90,7 +91,7 @@ class PaymentMethodController extends Controller
         $payment_method->delete();
 
         return redirect()->route('admin.payment_methods.index')->with([
-            'message'    => 'Deleted successfully',
+            'message'    => 'Payment Method Deleted Successfully',
             'alert-type' => 'success'
         ]);
     }
