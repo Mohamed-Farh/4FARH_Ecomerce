@@ -49,8 +49,8 @@ function getNumbers()
 
     return collect([
         'subtotal' => $subtotal,
-        // 'tax' => $productTaxes,
-        'tax' => $tax,
+        'tax' => $productTaxes,
+        // 'tax' => $tax,
         'taxText' => $taxText,
         'productTaxes' => (float)$productTaxes,
         'newSubTotal' => (float)$newSubTotal,

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Order;
 use App\Models\ProductReview;
 use App\Models\UserAddress;
 use Cviebrock\EloquentSluggable\Sluggable;

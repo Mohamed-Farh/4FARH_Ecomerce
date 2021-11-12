@@ -1,7 +1,7 @@
 <div class="col-lg-4">
     <div class="card border-0 rounded-0 p-lg-4 bg-light">
         <div class="card-body">
-            <h5 class="text-uppercase mb-4">Cart total</h5>
+            <h5 class="text-uppercase mb-4">Cart Total</h5>
             <ul class="list-unstyled mb-0">
             @if ($cart_total != 0)
                 <li class="d-flex align-items-center justify-content-between">
@@ -35,7 +35,7 @@
                 </li>
                 @else
                     <li class="align-items-center justify-content-center mb-4">
-                        <span>Your cart is empty!</span>
+                        <span>Your Cart Is Empty!</span>
                     </li>
                 @endif
             </ul>

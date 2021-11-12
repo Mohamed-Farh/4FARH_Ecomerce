@@ -3,6 +3,7 @@
 @section('title', 'Customer Index')
 
 @section('content')
+<div class="container">
 
     <!-- HERO SECTION-->
     <section class="py-5 bg-light">
@@ -41,4 +42,5 @@
 
     </section>
 
+</div>
 @endsection

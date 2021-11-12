@@ -73,7 +73,7 @@
                                     {{ auth()->user()->full_name }}
                                 </a>
                                 <div class="dropdown-menu mt-3" aria-labelledby="downMenuButton">
-                                    <a class="dropdown-item border-0" href="{{ route('customer.profile') }}">My Profile</a>
+                                    <a class="dropdown-item border-0" href="{{ route('customer.dashboard') }}">My Dashboard</a>
                                     <a href="javascript:void(0);" class="dropdown-item border-0" onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">logout</a>
                                     <form method="POST" action="{{ route('logout') }}" id="logout-form"

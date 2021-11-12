@@ -58,11 +58,14 @@ Route::group(['middleware' => ['roles', 'role:customer'] ], function(){
     Route::get('/addresses',        [FrontendCustomerController::class, 'addresses'])->name('customer.addresses');
     Route::get('/orders',           [FrontendCustomerController::class, 'orders'])->name('customer.orders');
 
-    Route::get('/checkout',                         [FrontendPaymentController::class, 'checkout'])->name('frontend.checkout');
-    Route::post('/checkout/payment',                [FrontendPaymentController::class, 'checkout_now'])->name('checkout.payment');
-    Route::get('/checkout/{order_id}/cancelled',    [FrontendPaymentController::class, 'cancelled'])->name('checkout.cancel');
-    Route::get('/checkout/{order_id}/completed',    [FrontendPaymentController::class, 'completed'])->name('checkout.complete');
-    Route::get('/checkout/webhook/{order?}/{env?}', [FrontendPaymentController::class, 'webhook'])->name('checkout.webhook.ipn');
+
+    Route::group(['middleware' => 'check_cart' ], function(){
+        Route::get('/checkout',                         [FrontendPaymentController::class, 'checkout'])->name('frontend.checkout');
+        Route::post('/checkout/payment',                [FrontendPaymentController::class, 'checkout_now'])->name('checkout.payment');
+        Route::get('/checkout/{order_id}/cancelled',    [FrontendPaymentController::class, 'cancelled'])->name('checkout.cancel');
+        Route::get('/checkout/{order_id}/completed',    [FrontendPaymentController::class, 'completed'])->name('checkout.complete');
+        Route::get('/checkout/webhook/{order?}/{env?}', [FrontendPaymentController::class, 'webhook'])->name('checkout.webhook.ipn');
+    });
 });
 //==========================================================================================================
 //================================= Admin Dashboard  =======================================================
