@@ -104,7 +104,7 @@
                     </p>
 
                     {{-- هنا بستخدم البرودكت غلشان ااقدر استخدمه في اللايف وبر --زي بالظبط الكومباكت (compact) بتالعت لارافبل --}}
-                    <livewire:frontend.show-products-component :product="$product" />
+                    <livewire:frontend.show-product-component :product="$product" />
 
 
                     <br>

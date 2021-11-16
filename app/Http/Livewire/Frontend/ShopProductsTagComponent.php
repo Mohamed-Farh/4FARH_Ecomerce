@@ -7,9 +7,12 @@ use App\Models\ProductCategory;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ShopProductsTagComponent extends Component
 {
+    use LivewireAlert;
+
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $paginationLimit = 12;

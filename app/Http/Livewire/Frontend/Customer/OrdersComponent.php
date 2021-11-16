@@ -5,9 +5,12 @@ namespace App\Http\Livewire\Frontend\Customer;
 use App\Models\Order;
 use App\Models\OrderTransaction;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class OrdersComponent extends Component
 {
+    use LivewireAlert;
+
     public $showOrder = false;
     public $order;
 

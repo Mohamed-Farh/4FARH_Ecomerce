@@ -7,11 +7,12 @@ use App\Models\Order;
 use App\Models\OrderTransaction;
 use App\Models\Product;
 use App\Models\ProductCopon;
-use App\Models\User;
+use App\User;
 use App\Notifications\Frontend\Customer\OrderCreatedNotification;
 use App\Notifications\Frontend\Customer\OrderThanksNotification;
 use App\Services\OmnipayService;
 use App\Services\OrderService;
+use App\User as AppUser;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Meneses\LaravelMpdf\Facades\LaravelMpdf as PDF;
 use Illuminate\Http\Request;
@@ -101,21 +102,21 @@ class PaymentController extends Controller
                 'shipping',
             ]);
 
-            // User::whereHas('roles', function($query) {
-            //     $query->whereIn('name', ['admin', 'supervisor']);
-            // })->each(function ($admin, $key) use ($order) {
-            //     $admin->notify(new OrderCreatedNotification($order));
-            // });
+            AppUser::whereHas('roles', function($query) {
+                $query->whereIn('name', ['superAdmin', 'admin']);
+            })->each(function ($admin, $key) use ($order) {
+                $admin->notify(new OrderCreatedNotification($order));
+            });
 
 
-            // $data = $order->toArray();
-            // $data['currency_symbol'] = $order->currency == 'USD' ? '$' : $order->currency;
-            // $pdf = PDF::loadView('layouts.invoice', $data);
-            // $saved_file = storage_path('app/pdf/files/' . $data['ref_id'] . '.pdf');
-            // $pdf->save($saved_file);
+            $data = $order->toArray();
+            $data['currency_symbol'] = $order->currency == 'USD' ? '$' : $order->currency;
+            $pdf = PDF::loadView('layouts.invoice', $data);
+            $saved_file = storage_path('app/pdf/files/' . $data['ref_id'] . '.pdf');
+            $pdf->save($saved_file);
 
-            // $customer = User::find($order->user_id);
-            // $customer->notify(new OrderThanksNotification($order, $saved_file));
+            $customer = User::find($order->user_id);
+            $customer->notify(new OrderThanksNotification($order, $saved_file));
 
 
             toast('Your recent payment is successful with reference code: ' . $response->getTransactionReference(), 'success');

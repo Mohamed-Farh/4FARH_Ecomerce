@@ -7,9 +7,12 @@ use App\Models\ProductCopon;
 use App\Models\ShippingCompany;
 use App\Models\UserAddress;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class CheckoutComponent extends Component
 {
+    use LivewireAlert;
+
     public $cart_subtotal;
     public $cart_tax;
     public $cart_total;

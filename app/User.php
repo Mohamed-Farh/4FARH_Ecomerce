@@ -5,18 +5,16 @@ namespace App;
 use App\Models\Order;
 use App\Models\ProductReview;
 use App\Models\UserAddress;
-use Cviebrock\EloquentSluggable\Sluggable;
-use Mindscms\Entrust\Traits\EntrustUserWithPermissionsTrait;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Mindscms\Entrust\Traits\EntrustUserWithPermissionsTrait;
 use Nicolaslopezj\Searchable\SearchableTrait;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use  Notifiable, EntrustUserWithPermissionsTrait , SearchableTrait;
+    use Notifiable, SearchableTrait, EntrustUserWithPermissionsTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -24,12 +22,17 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'username', 'email', 'mobile', 'password', 'user_image', 'status'
+        'first_name',
+        'last_name',
+        'username',
+        'mobile',
+        'user_image',
+        'status',
+        'email',
+        'password',
     ];
 
-
     protected $appends = ['full_name'];
-
 
     /**
      * The attributes that should be hidden for arrays.
@@ -37,7 +40,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
+        'remember_token',
     ];
 
     /**
@@ -49,19 +53,30 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    protected $searchable = [
+    public $searchable = [
         'columns' => [
             'users.first_name' => 10,
             'users.last_name' => 10,
             'users.username' => 10,
             'users.email' => 10,
             'users.mobile' => 10,
-        ],
+        ]
     ];
+
+    public function receivesBroadcastNotificationsOn(): string
+    {
+        return 'App.User.' . $this->id;
+    }
+
 
     public function getFullNameAttribute(): string
     {
         return ucfirst($this->first_name) . ' ' . ucfirst($this->last_name);
+    }
+
+    public function status(): string
+    {
+        return $this->status ? 'Active' : 'Inactive';
     }
 
     public function reviews(): HasMany
@@ -78,4 +93,5 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Order::class);
     }
+
 }

@@ -16,6 +16,7 @@ class FrontendController extends Controller
         $categories  = Category::whereStatus(1)->whereNull('parent_id')->get();
 
         return view('frontend.index', compact('categories'));
+
     }
 
     public function shop($slug = null)

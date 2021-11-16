@@ -20,7 +20,9 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('backend/css/sb-admin-2.min.css') }}" rel="stylesheet">
 
+    <livewire:styles />
 </head>
+
 
 <body class="bg-gradient-primary">
 
@@ -31,7 +33,7 @@
 
 
 
-
+    <livewire:scripts />
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('backend/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('backend/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

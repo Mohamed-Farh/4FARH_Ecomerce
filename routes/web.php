@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Backend\BackendController;
+use \Backend\OrderController;
 use \Backend\PaymentMethodController;
 use \Backend\ShippingCompanyController;
 use App\Http\Controllers\CustomerSearchController;
@@ -114,7 +115,7 @@ Route::group(['prefix' => 'admin', 'as'=>'admin.' ], function(){
         Route::resource('cities'                ,CityController::class);
         Route::resource('shipping_companies'    ,ShippingCompanyController::class);
         Route::resource('payment_methods'       ,PaymentMethodController::class);
-
+        Route::resource('orders'                ,OrderController::class);
 
     });
 

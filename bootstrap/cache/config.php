@@ -4,7 +4,7 @@
     'name' => '4FARH_Ecommerce',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost',
+    'url' => 'http://127.0.0.1:8000',
     'asset_url' => NULL,
     'timezone' => 'UTC',
     'locale' => 'en',
@@ -39,11 +39,13 @@
       22 => 'Mindscms\\Entrust\\EntrustServiceProvider',
       23 => 'Intervention\\Image\\ImageServiceProvider',
       24 => 'Gloudemans\\Shoppingcart\\ShoppingcartServiceProvider',
-      25 => 'App\\Providers\\AppServiceProvider',
-      26 => 'App\\Providers\\AuthServiceProvider',
-      27 => 'App\\Providers\\EventServiceProvider',
-      28 => 'App\\Providers\\RouteServiceProvider',
-      29 => 'App\\Providers\\ViewServiceProvider',
+      25 => 'Meneses\\LaravelMpdf\\LaravelMpdfServiceProvider',
+      26 => 'App\\Providers\\AppServiceProvider',
+      27 => 'App\\Providers\\AuthServiceProvider',
+      28 => 'App\\Providers\\BroadcastServiceProvider',
+      29 => 'App\\Providers\\EventServiceProvider',
+      30 => 'App\\Providers\\RouteServiceProvider',
+      31 => 'App\\Providers\\ViewServiceProvider',
     ),
     'aliases' => 
     array (
@@ -86,6 +88,7 @@
       'Entrust' => 'Mindscms\\Entrust\\EntrustFacade',
       'Image' => 'Intervention\\Image\\Facades\\Image',
       'Cart' => 'Gloudemans\\Shoppingcart\\Facades\\Cart',
+      'PDF' => 'Meneses\\LaravelMpdf\\Facades\\LaravelMpdf',
     ),
   ),
   'auth' => 
@@ -132,19 +135,23 @@
   ),
   'broadcasting' => 
   array (
-    'default' => 'log',
+    'default' => 'pusher',
     'connections' => 
     array (
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => '',
-        'secret' => '',
-        'app_id' => '',
+        'key' => '4farhKey',
+        'secret' => '4farhSecret',
+        'app_id' => '4farhId',
         'options' => 
         array (
-          'cluster' => 'mt1',
+          'cluster' => 'eu',
           'useTLS' => true,
+          'encrypted' => true,
+          'host' => '127.0.0.1',
+          'port' => 6001,
+          'scheme' => 'http',
         ),
       ),
       'redis' => 
@@ -488,7 +495,7 @@
       array (
         'driver' => 'local',
         'root' => 'E:\\4FARH_Ecommerce\\storage\\app/public',
-        'url' => 'http://localhost/storage',
+        'url' => 'http://127.0.0.1:8000/storage',
         'visibility' => 'public',
       ),
       's3' => 
@@ -587,6 +594,7 @@
     'view_path' => 'E:\\4FARH_Ecommerce\\resources\\views/livewire',
     'layout' => 'layouts.app',
     'asset_url' => NULL,
+    'app_url' => NULL,
     'middleware_group' => 'web',
     'temporary_file_upload' => 
     array (
@@ -617,6 +625,7 @@
     ),
     'manifest_path' => NULL,
     'back_button_cache' => false,
+    'render_on_redirect' => false,
   ),
   'livewire-alert' => 
   array (
@@ -777,6 +786,51 @@
         0 => 'E:\\4FARH_Ecommerce\\resources\\views/vendor/mail',
       ),
     ),
+  ),
+  'pdf' => 
+  array (
+    'mode' => '',
+    'format' => 'A4',
+    'default_font_size' => '12',
+    'default_font' => 'sans-serif',
+    'margin_left' => 10,
+    'margin_right' => 10,
+    'margin_top' => 10,
+    'margin_bottom' => 10,
+    'margin_header' => 0,
+    'margin_footer' => 0,
+    'orientation' => 'P',
+    'title' => 'Laravel mPDF',
+    'subject' => '',
+    'author' => '',
+    'watermark' => '',
+    'show_watermark' => false,
+    'show_watermark_image' => false,
+    'watermark_font' => 'sans-serif',
+    'display_mode' => 'fullpage',
+    'watermark_text_alpha' => 0.1,
+    'watermark_image_path' => '',
+    'watermark_image_alpha' => 0.2,
+    'watermark_image_size' => 'D',
+    'watermark_image_position' => 'P',
+    'custom_font_dir' => 'E:\\4FARH_Ecommerce\\public/fonts/',
+    'custom_font_data' => 
+    array (
+      'almarai' => 
+      array (
+        'R' => 'Almarai-Regular.ttf',
+        'B' => 'Almarai-Bold.ttf',
+        'I' => 'Almarai-Light.ttf',
+        'BI' => 'Almarai-ExtraBold.ttf',
+        'useOTL' => 255,
+        'useKashida' => 75,
+      ),
+    ),
+    'auto_language_detection' => false,
+    'temp_dir' => 'E:\\4FARH_Ecommerce\\storage/app/pdf/',
+    'pdfa' => false,
+    'pdfaauto' => false,
+    'use_active_forms' => false,
   ),
   'queue' => 
   array (
@@ -961,5 +1015,52 @@
       0 => 'E:\\4FARH_Ecommerce\\resources\\views',
     ),
     'compiled' => 'E:\\4FARH_Ecommerce\\storage\\framework\\views',
+  ),
+  'websockets' => 
+  array (
+    'dashboard' => 
+    array (
+      'port' => 6001,
+    ),
+    'apps' => 
+    array (
+      0 => 
+      array (
+        'id' => '4farhId',
+        'name' => '4FARH_Ecommerce',
+        'key' => '4farhKey',
+        'secret' => '4farhSecret',
+        'path' => NULL,
+        'capacity' => NULL,
+        'enable_client_messages' => false,
+        'enable_statistics' => true,
+      ),
+    ),
+    'app_provider' => 'BeyondCode\\LaravelWebSockets\\Apps\\ConfigAppProvider',
+    'allowed_origins' => 
+    array (
+    ),
+    'max_request_size_in_kb' => 600,
+    'path' => 'laravel-websockets',
+    'middleware' => 
+    array (
+      0 => 'web',
+      1 => 'BeyondCode\\LaravelWebSockets\\Dashboard\\Http\\Middleware\\Authorize',
+    ),
+    'statistics' => 
+    array (
+      'model' => 'BeyondCode\\LaravelWebSockets\\Statistics\\Models\\WebSocketsStatisticsEntry',
+      'logger' => 'BeyondCode\\LaravelWebSockets\\Statistics\\Logger\\HttpStatisticsLogger',
+      'interval_in_seconds' => 60,
+      'delete_statistics_older_than_days' => 60,
+      'perform_dns_lookup' => false,
+    ),
+    'ssl' => 
+    array (
+      'local_cert' => '',
+      'local_pk' => '',
+      'passphrase' => NULL,
+    ),
+    'channel_manager' => 'BeyondCode\\LaravelWebSockets\\WebSockets\\Channels\\ChannelManagers\\ArrayChannelManager',
   ),
 );

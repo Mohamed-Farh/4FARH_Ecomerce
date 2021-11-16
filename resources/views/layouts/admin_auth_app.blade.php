@@ -7,6 +7,7 @@
 
     @yield('style')
 
+    <livewire:styles />
 </head>
 
 <body class="bg-gradient-primary" id="page-top">
@@ -43,7 +44,7 @@
 
         </div>
         <!-- End of Page Wrapper -->
-
+        <livewire:scripts />
         @include('layouts.backend.footer_script')
 
 

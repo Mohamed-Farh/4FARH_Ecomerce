@@ -5,9 +5,13 @@ namespace App\Http\Livewire\Frontend;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+
 
 class FeaturedProduct extends Component
 {
+    use LivewireAlert;
+
     public function addToCart($id)
     {
         $product = Product::whereId($id)->Active()->HasQuantity()->ActiveCategory()->firstOrFail();

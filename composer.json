@@ -9,13 +9,16 @@
     "license": "MIT",
     "require": {
         "php": "^7.2.5|^8.0",
+        "beyondcode/laravel-websockets": "^1.12",
+        "carlos-meneses/laravel-mpdf": "^2.1",
         "cviebrock/eloquent-sluggable": "7.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.3.1|^7.0.1",
+        "guzzlehttp/psr7": "^1.5",
         "intervention/image": "^2.6",
         "intervention/imagecache": "^2.5",
-        "jantinnerezo/livewire-alert": "^2.1",
+        "jantinnerezo/livewire-alert": "^2.2",
         "laravel/framework": "^7.29",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^2.4",
@@ -26,6 +29,7 @@
         "nicolaslopezj/searchable": "^1.13",
         "omnipay/paypal": "^3.0",
         "predis/predis": "^1.1",
+        "pusher/pusher-php-server": "5.0",
         "realrashid/sweet-alert": "^4.1"
     },
     "require-dev": {

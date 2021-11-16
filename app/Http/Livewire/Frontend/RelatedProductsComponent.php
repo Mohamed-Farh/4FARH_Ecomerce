@@ -5,9 +5,12 @@ namespace App\Http\Livewire\Frontend;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class RelatedProductsComponent extends Component
 {
+    use LivewireAlert;
+
     public $relatedProducts;
 
     public function mount($relatedProducts)

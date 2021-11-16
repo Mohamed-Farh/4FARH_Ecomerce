@@ -2,14 +2,18 @@
 
 namespace App\Http\Livewire\Frontend;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ShopProductsComponent extends Component
 {
+    use LivewireAlert;
+
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
     public $paginationLimit = 12;
@@ -70,10 +74,10 @@ class ShopProductsComponent extends Component
         if ($this->slug == '') {
             $products = $products->ActiveCategory();
         } else {
-            $product_category = ProductCategory::whereSlug($this->slug)->whereStatus(true)->first();
+            $product_category = Category::whereSlug($this->slug)->whereStatus(true)->first();
 
             if (is_null($product_category->parent_id)) {
-                $categoriesIds = ProductCategory::whereParentId($product_category->id)
+                $categoriesIds = Category::whereParentId($product_category->id)
                     ->whereStatus(true)->pluck('id')->toArray();
 
                 $products = $products->whereHas('category', function ($query) use ($categoriesIds) {

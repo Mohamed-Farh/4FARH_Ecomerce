@@ -7,9 +7,12 @@ use App\Country;
 use App\State;
 use App\Models\UserAddress;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class AddressesComponent extends Component
 {
+    use LivewireAlert;
+
 
     public $showForm = false;
     public $editMode = false;

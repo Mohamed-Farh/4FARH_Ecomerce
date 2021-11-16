@@ -5,9 +5,12 @@ namespace App\Http\Livewire\Frontend;
 use App\Models\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class ProductModalShared extends Component
 {
+    use LivewireAlert;
+
     public $productModalCount = false;
     public $productModal = [];
     public $quantity = 1;

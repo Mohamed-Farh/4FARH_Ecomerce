@@ -64,31 +64,17 @@
                     @endguest
 
                     @auth
-                        {{-- <li class="nav-item dropdown"> --}}
+                        <li class="nav-item dropdown">
+                            <livewire:frontend.header.notification-component />
+                        </li>
 
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="downMenuButton" href="#"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ auth()->user()->full_name }}
-                                </a>
-                                <div class="dropdown-menu mt-3" aria-labelledby="downMenuButton">
-                                    <a class="dropdown-item border-0" href="{{ route('customer.dashboard') }}">My Dashboard</a>
-                                    <a href="javascript:void(0);" class="dropdown-item border-0" onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">logout</a>
-                                    <form method="POST" action="{{ route('logout') }}" id="logout-form"
-                                        class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-
-                            {{-- <a class="nav-link dropdown-toggle" id="authDropdown" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false" >
-                                Welcome {{ auth()->user()->full_name }}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="downMenuButton" href="#"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{ auth()->user()->full_name }}
                             </a>
-                            <div class="dropdown-menu mt-3" aria-labelledby="authDropdown">
-                                <a href="#" class="dropdown-item border-0">My Profile</a>
+                            <div class="dropdown-menu mt-3" aria-labelledby="downMenuButton">
+                                <a class="dropdown-item border-0" href="{{ route('customer.dashboard') }}">My Dashboard</a>
                                 <a href="javascript:void(0);" class="dropdown-item border-0" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">logout</a>
                                 <form method="POST" action="{{ route('logout') }}" id="logout-form"
@@ -96,7 +82,7 @@
                                     @csrf
                                 </form>
                             </div>
-                        </li> --}}
+                        </li>
                     @endauth
 
                 </ul>
