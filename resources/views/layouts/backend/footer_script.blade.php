@@ -34,13 +34,6 @@
     <script src="{{ asset('backend/js/sb-admin-2.min.js') }}"></script>
     <script src="{{ asset('backend/js/custom.js') }}"></script>
 
-    <!-- Page level plugins -->
-    <script src="{{ asset('backend/vendor/chart.js/Chart.min.js') }}"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="{{ asset('backend/js/demo/chart-area-demo.js') }}"></script>
-    <script src="{{ asset('backend/js/demo/chart-pie-demo.js') }}"></script>
-
 
     <script src="{{ asset('backend/vendor/bootstrap-fileinput/js/plugins/piexif.min.js') }}"></script>
     <script src="{{ asset('backend/vendor/bootstrap-fileinput/js/plugins/sortable.min.js') }}"></script>

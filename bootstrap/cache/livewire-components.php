@@ -1,4 +1,6 @@
 <?php return array (
+  'backend.dashboard.chart-component' => 'App\\Http\\Livewire\\Backend\\Dashboard\\ChartComponent',
+  'backend.dashboard.statistics-component' => 'App\\Http\\Livewire\\Backend\\Dashboard\\StatisticsComponent',
   'backend.navbar.notification-component' => 'App\\Http\\Livewire\\Backend\\Navbar\\NotificationComponent',
   'frontend.cart-item-component' => 'App\\Http\\Livewire\\Frontend\\CartItemComponent',
   'frontend.cart-total-component' => 'App\\Http\\Livewire\\Frontend\\CartTotalComponent',
