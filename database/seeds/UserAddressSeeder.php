@@ -19,17 +19,15 @@ class UserAddressSeeder extends Seeder
     {
 
         Schema::disableForeignKeyConstraints();
-        DB::table('customer_addresses');
-        Schema::enableForeignKeyConstraints();
-
+        // DB::table('customer_addresses');
         $faker = Factory::create();
 
-        $farh  = User::whereUsername('Mohamed Farh')->first();
+        $mohamed  = User::whereUsername('Mohamed Farh')->first();
         $eg    = Country::with('states')->whereId(65)->first();
         $state = $eg->states->random()->id;
         $city  = City::whereStateId($state)->inRandomOrder()->first()->id;
 
-        $farh->addresses()->create([
+        $mohamed->addresses()->create([
             'default_address'=> true,
             'address_title'  => 'Home',
             'first_name'     => 'Mohamed',
@@ -45,7 +43,7 @@ class UserAddressSeeder extends Seeder
             'po_box'         => $faker->randomNumber(4),
         ]);
 
-        $farh->addresses()->create([
+        $mohamed->addresses()->create([
             'default_address'=> false,
             'address_title'  => 'Work',
             'first_name'     => 'Mohamed',
@@ -62,23 +60,41 @@ class UserAddressSeeder extends Seeder
         ]);
 
 
-        User::where('id', '>', '4')->each(function ($user) use ($faker, $eg, $state, $city){
-            $user->addresses()->create([
-                'default_address'=> false,
-                'address_title'  => $faker->word,
-                'first_name'     => $faker->firstName,
-                'last_name'      => $faker->lastName,
-                'email'          => $faker->email,
-                'mobile'         => $faker->phoneNumber,
-                'address'        => $faker->address,
-                'address2'       => $faker->secondaryAddress,
-                'country_id'     => $eg->id,
-                'state_id'       => $state,
-                'city_id'        => $city,
-                'zip_code'       => $faker->randomNumber(5),
-                'po_box'         => $faker->randomNumber(4),
-            ]);
-        });
+        $ahmed  = User::whereUsername('Ahmed Farh')->first();
+        $ahmed->addresses()->create([
+            'default_address'=> false,
+            'address_title'  => 'Home',
+            'first_name'     => 'Ahmed',
+            'last_name'      => 'Farh',
+            'email'          => $faker->email,
+            'mobile'         => $faker->phoneNumber,
+            'address'        => $faker->address,
+            'address2'       => $faker->secondaryAddress,
+            'country_id'     => $eg->id,
+            'state_id'       => $state,
+            'city_id'        => $city,
+            'zip_code'       => $faker->randomNumber(5),
+            'po_box'         => $faker->randomNumber(4),
+        ]);
+
+        $customer  = User::whereUsername('Customer Customer')->first();
+        $customer->addresses()->create([
+            'default_address'=> false,
+            'address_title'  => 'Home',
+            'first_name'     => 'Customer',
+            'last_name'      => 'Customer',
+            'email'          => $faker->email,
+            'mobile'         => $faker->phoneNumber,
+            'address'        => $faker->address,
+            'address2'       => $faker->secondaryAddress,
+            'country_id'     => $eg->id,
+            'state_id'       => $state,
+            'city_id'        => $city,
+            'zip_code'       => $faker->randomNumber(5),
+            'po_box'         => $faker->randomNumber(4),
+        ]);
+
+        Schema::enableForeignKeyConstraints();
 
     }
 }

@@ -5,20 +5,19 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use App\Role;
 use App\User;
+use App\Models\UserAddress;
 use Carbon\Carbon;
-use Faker\Factory;
 
 class EntrustSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      *
+     *
      * @return void
      */
     public function run()
     {
-        $faker = Factory::create();
-
 
         $superAdminRole     = Role::create(['name' => 'superAdmin',  'display_name' => 'Administrator',  'description' => 'System Administrator', 'allowed_route' => 'admin']);
         $adminRole          = Role::create(['name' => 'admin',       'display_name' => 'admin',          'description' => 'System Admin',         'allowed_route' => 'admin']);
@@ -61,7 +60,7 @@ class EntrustSeeder extends Seeder
             'email_verified_at' => Carbon::now(),
             'remember_token' => Str::random(10),
         ]);
-        $user->attachRole($user);
+        $user->attachRole($userRole);
 
 
 
@@ -73,24 +72,6 @@ class EntrustSeeder extends Seeder
 
         $user3 = User::create([ 'first_name' => 'Customer', 'last_name' => 'Customer', 'username' => 'Customer Customer', 'email' => 'customer@customer.com',  'mobile' => '01234567999','status'=> 1, 'password' => bcrypt('password'),'email_verified_at' => Carbon::now(), 'remember_token' => Str::random(10), ]);
         $user3->attachRole($customerRole);
-
-        for ($i = 0; $i <10; $i++) {
-            $user_i = User::create([
-                'first_name' => $faker->firstName,
-                'last_name' => $faker->lastName,
-                'username' => $faker->userName,
-                'email' => $faker->email,
-                'mobile' => '9665' . random_int(10000000, 99999999),
-                'email_verified_at' => Carbon::now(),
-                'password' => bcrypt('password'),
-                'status'=> 1,
-                'remember_token' => Str::random(10),
-            ]);
-            $user_i->attachRole($customerRole);
-        }
-
-
-
 
 
         // MAIN
@@ -112,6 +93,25 @@ class EntrustSeeder extends Seeder
         $manageMain->save();
 
 
+        /*
+         * Create 1000 fake users with their addresses.
+         */
+        //factory(User::class, 1000)->hasAddresses(1)->create();
+
+        // factory(App\User::class, 10)->create();
+
+        // $users = factory(App\User::class, 10)
+        //                 ->create()
+        //                 ->each(function ($user) {
+        //                     $user->addresses(1)->make();
+        //                 });
+
+        factory(App\User::class, 1000)->create()->each(function($user){
+
+            $addresses = factory(App\Models\UserAddress::class)->make();
+
+            $user->addresses()->save($addresses);
+        });
 
 
         //Categories

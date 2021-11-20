@@ -34,7 +34,7 @@ class OrderSeeder extends Seeder
             'shipping_company_id' => 1,
             'payment_method_id' => 1,
             'subtotal' => $subTotalValue,
-            'discount_code' => 'FARH_200',
+            'discount_code' => 'FARH_50H',
             'discount' => $discountValue,
             'shipping' => $shippingValue,
             'tax' => $taxValue,
@@ -64,7 +64,7 @@ class OrderSeeder extends Seeder
          * Create fake order for each user
          */
         User::where('id', '>', 4)->each(function ($user) use ($faker) {
-            foreach(range(4, 7) as $index) {
+            foreach(range(3, 6) as $index) {
                 $products = Product::active()->hasQuantity()->activeCategory()->inRandomOrder()->take(3)->get();
                 $subTotalValue = $products->sum('price');
                 $discountValue = $subTotalValue / 2;
@@ -79,7 +79,7 @@ class OrderSeeder extends Seeder
                     'shipping_company_id' => 1,
                     'payment_method_id' => 1,
                     'subtotal' => $subTotalValue,
-                    'discount_code' => 'FARH_200',
+                    'discount_code' => 'FARH_50H',
                     'discount' => $discountValue,
                     'shipping' => $shippingValue,
                     'tax' => $taxValue,
